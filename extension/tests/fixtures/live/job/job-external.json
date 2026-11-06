@@ -1,0 +1,13 @@
+{
+  "fixture": {
+    "pageType": "job-external",
+    "host": "app.joinhandshake.com"
+  },
+  "sourceUrl": "https://app.joinhandshake.com/jobs/90000001",
+  "expected": {
+    "title": "Data Analyst Intern",
+    "employer": "Employer A",
+    "applyType": "external",
+    "jobIdFromUrl": "90000001"
+  }
+}

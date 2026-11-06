@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-10-25",
+  "chrome": "155.0.8059.86",
+  "tenant": "app.joinhandshake.com",
+  "pages": [
+    "https://app.joinhandshake.com/jobs/{jobId} (external apply)",
+    "https://app.joinhandshake.com/job-search/{jobId} (split-view detail, handshake apply)"
+  ],
+  "sanitized": true,
+  "variants": {
+    "job-external.html": "apply externally button",
+    "job-handshake.html": "plain apply button"
+  },
+  "notes": "Employer names, job IDs, school and alumni data removed."
+}

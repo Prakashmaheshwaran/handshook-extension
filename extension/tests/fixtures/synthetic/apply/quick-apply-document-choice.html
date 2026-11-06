@@ -1,0 +1,25 @@
+<main data-hook="job-details-page" aria-label="Job detail">
+  <h1>Software Engineer Intern</h1>
+  <button id="quick-apply" type="button">Quick Apply</button>
+  <div>
+    <label for="quick-resume">Resume</label>
+    <select id="quick-resume" name="resume">
+      <option value="doc-other" selected>Other Resume</option>
+      <option value="doc-resume">Resume 2026</option>
+    </select>
+  </div>
+  <button id="normal-apply" type="button" aria-haspopup="dialog" aria-controls="apply-dialog">
+    Apply
+  </button>
+  <div id="apply-dialog" role="dialog" aria-modal="true" hidden>
+    <h2>Review application</h2>
+    <div>
+      <label for="resume-select">Resume</label>
+      <select id="resume-select" name="resume" required>
+        <option value="doc-other">Other Resume</option>
+        <option value="doc-resume">Resume 2026</option>
+      </select>
+    </div>
+    <button id="submit" type="button">Submit Application</button>
+  </div>
+</main>

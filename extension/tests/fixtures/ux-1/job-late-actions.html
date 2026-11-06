@@ -1,0 +1,23 @@
+<main data-hook="job-details-page" aria-busy="true"></main>
+<template id="job-content">
+  <h1>Synthetic role</h1>
+  <a href="/e/90000000">Synthetic employer</a>
+  <div style="opacity: 0">
+    <button type="button" aria-label="Quick apply" class="rosetta-button sticky-copy" data-kind="button" data-variant="primary">Quick apply</button>
+  </div>
+  <div role="group" aria-label="Job actions">
+    <button type="button" aria-label="Save" class="rosetta-button" data-kind="button" data-variant="secondary">Save</button>
+    <button type="button" aria-label="Share" class="rosetta-button" data-kind="button" data-variant="secondary">Share</button>
+    <button type="button" aria-label="More actions for this job" class="rosetta-button" data-kind="button" data-variant="secondary">...</button>
+    <button type="button" aria-label="Quick apply" class="rosetta-button primary-action" data-kind="button" data-variant="primary">Quick apply</button>
+  </div>
+  <section aria-label="Job description"><p>Synthetic description.</p></section>
+</template>
+<script>
+  setTimeout(() => {
+    const root = document.querySelector('[data-hook="job-details-page"]');
+    const template = document.getElementById('job-content');
+    root.replaceChildren(template.content.cloneNode(true));
+    root.setAttribute('aria-busy', 'false');
+  }, 2000);
+</script>

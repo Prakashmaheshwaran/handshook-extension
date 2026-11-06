@@ -1,0 +1,51 @@
+# Environment variables
+.env
+
+# Secrets (cookies, credentials)
+secrets.json
+cookies.json
+cookies_backup.json
+*.har
+
+# Output folders (generated at runtime)
+logs/
+csv/
+data/
+html/
+
+# Configuration (contains sensitive data - use conf.json.template instead)
+conf.py
+conf.json
+# User data and personal information
+USER_NAME
+*.personal
+*.private
+# Audit/report files
+AUDIT_REPORT.md
+
+# Trae IDE config
+.trae/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+

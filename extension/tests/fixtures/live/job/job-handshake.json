@@ -1,0 +1,13 @@
+{
+  "fixture": {
+    "pageType": "job-form",
+    "host": "app.joinhandshake.com"
+  },
+  "sourceUrl": "https://app.joinhandshake.com/jobs/90000002",
+  "expected": {
+    "title": "Software Engineer",
+    "employer": "Employer B",
+    "applyType": "handshake_form",
+    "jobIdFromUrl": "90000002"
+  }
+}

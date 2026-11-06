@@ -1,0 +1,43 @@
+<!--
+  SYNTHETIC fixture (tests only): the live shape where the attached resume is a
+  dismissible status alert. Closing the alert detaches it and reveals the
+  "Search your resumes" picker; choosing an option attaches that file again.
+
+  Every employer, document ID and file name is invented; no tenant, person,
+  resume or cover letter is represented.
+-->
+<main>
+  <div role="dialog" aria-modal="true">
+    <h2>Apply to Example Employer</h2>
+    <p>Applying requires a resume. Attach it below.</p>
+    <fieldset id="resume-fieldset">
+      <div class="heading-wrap">
+        <h4>Attach your resume</h4>
+      </div>
+      <div class="rosetta-inline-alert" role="status" id="attached-resume">
+        <div class="rosetta-inline-alert__content">
+          <h5>fixture_live_resume.pdf</h5>
+          <a class="rosetta-link" href="/docs/resume-live" target="_blank" rel="noreferrer"
+            >Preview document</a
+          >
+        </div>
+        <button id="dismiss-resume" type="button" aria-label="Close">×</button>
+      </div>
+      <div id="resume-picker" hidden>
+        <input
+          id="resume-search"
+          type="search"
+          placeholder="Search your resumes"
+          role="combobox"
+          aria-controls="resume-listbox"
+          aria-expanded="false"
+        />
+        <ul id="resume-listbox" role="listbox" hidden>
+          <li role="option" data-document-id="resume-wanted">fixture_wanted.pdf</li>
+          <li role="option" data-document-id="resume-live">fixture_live_resume.pdf</li>
+        </ul>
+      </div>
+    </fieldset>
+    <button type="button">Submit Application</button>
+  </div>
+</main>

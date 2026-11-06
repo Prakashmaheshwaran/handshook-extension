@@ -1,0 +1,89 @@
+name: Extension CI
+
+on:
+  push:
+    paths:
+      - "extension/**"
+      - ".github/workflows/extension.yml"
+  pull_request:
+    paths:
+      - "extension/**"
+      - ".github/workflows/extension.yml"
+
+concurrency:
+  group: extension-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, lint, format, test, build, package
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: extension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22.22.2"
+          cache: "npm"
+          cache-dependency-path: extension/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run build
+      - run: npm run zip
+      - run: npm run package
+      - name: Upload unpacked extension
+        uses: actions/upload-artifact@v7
+        with:
+          name: handshook-chrome-mv3
+          path: extension/.output/chrome-mv3
+          if-no-files-found: error
+          include-hidden-files: true
+      - name: Upload store ZIP and checksum
+        uses: actions/upload-artifact@v7
+        with:
+          name: handshook-store-zip
+          path: |
+            extension/.output/*.zip
+            extension/.output/*.sha256
+          if-no-files-found: error
+          # .output is a hidden directory; upload-artifact@v4 skips those by default.
+          include-hidden-files: true
+
+  e2e:
+    name: Playwright E2E (mock site)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: extension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22.22.2"
+          cache: "npm"
+          cache-dependency-path: extension/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run test:e2e
+        env:
+          HANDSHOOK_E2E_HEADLESS: "1"
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: extension/playwright-report
+          if-no-files-found: error
+      - name: Upload Playwright failure traces
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-failure-artifacts
+          path: extension/test-results
+          if-no-files-found: warn

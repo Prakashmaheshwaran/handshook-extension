@@ -1,0 +1,27 @@
+<!-- Synthetic reconstruction. All names and document IDs are fictional. -->
+<div role="dialog" aria-modal="true">
+  <h2>Apply to Example Employer</h2>
+  <fieldset id="other-fieldset">
+    <div><h4>Attach other required documents</h4></div>
+    <div id="other-card" class="rosetta-inline-alert" role="status">
+      <div class="rosetta-inline-alert__content">
+        <h5>example_portfolio_link.pdf</h5>
+        <a href="/docs/other-chosen">Preview document</a>
+      </div>
+      <button id="remove-other" type="button" aria-label="Close">×</button>
+    </div>
+    <div id="other-picker" hidden>
+      <input
+        id="other-search"
+        type="search"
+        placeholder="Search your other documents"
+        role="combobox"
+        aria-controls="other-listbox"
+      />
+      <div id="other-listbox" role="listbox" hidden>
+        <div role="option">example_portfolio_link.pdf</div>
+      </div>
+    </div>
+  </fieldset>
+  <button id="submit" type="button">Submit Application</button>
+</div>

@@ -1,0 +1,30 @@
+<!--
+  SYNTHETIC fixture (tests only): mirrors the live Handshake application dialog
+  observed on 2026-10-30 (Quick apply → "Apply to <Employer>").
+
+  Structure reproduced: the "Attach your resume" heading sits in its own <div>
+  while the already-attached file is a sibling alert inside the same <fieldset>.
+  The alert exposes the document only through a "Preview document" link and has
+  no remove control. Every employer, document ID and file name is invented.
+-->
+<main>
+  <div role="dialog" aria-modal="true">
+    <h2>Apply to Example Employer</h2>
+    <h3>Details from Example Employer:</h3>
+    <p>Applying requires a resume. Attach it below and get one step closer to your next job!</p>
+    <fieldset>
+      <div class="heading-wrap">
+        <h4>Attach your resume</h4>
+      </div>
+      <div class="rosetta-inline-alert">
+        <div class="rosetta-inline-alert__content">
+          <h5>fixture_live_resume.pdf</h5>
+          <a class="rosetta-link" href="/docs/resume-live" target="_blank" rel="noreferrer"
+            >Preview document</a
+          >
+        </div>
+      </div>
+    </fieldset>
+    <button type="button">Submit Application</button>
+  </div>
+</main>

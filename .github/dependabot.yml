@@ -1,0 +1,47 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/extension"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 5
+    groups:
+      # Major bumps stay out of the groups so each one arrives as its own
+      # reviewable PR. Grouping them put typescript 7 next to the patches,
+      # and typescript-eslint 8.x (peer `>=4.8.4 <6.1.0`) made `npm ci` fail.
+      extension-dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      extension-runtime-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Hold TypeScript majors until typescript-eslint widens its peer range
+      # beyond `<6.1.0`; until then a major-only PR could never install.
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
+    commit-message:
+      prefix: "chore(extension)"
+    labels:
+      - "dependencies"
+      - "extension"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - "dependencies"
+      - "ci"

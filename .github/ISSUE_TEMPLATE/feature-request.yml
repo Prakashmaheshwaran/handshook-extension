@@ -1,0 +1,58 @@
+name: Feature request
+description: Suggest a capability or improvement for the Handshook extension.
+title: "[Feature] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include passwords, API keys, cookies, resumes, transcripts, application exports,
+        or real account/job/school identifiers. Use fictional examples.
+
+        For a security issue, stop and follow SECURITY.md instead of opening a public issue.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Setup and onboarding
+        - Job discovery and filters
+        - Applying and document selection
+        - Saved answers and question handling
+        - AI matching or AI page assist
+        - Pacing, caps, or run control
+        - Dashboard, queue, or history
+        - Diagnostics, backup, or privacy
+        - Install, packaging, or browser support
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do, and what gets in the way today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest change that would solve the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing settings, workarounds, or a different design.
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints
+      options:
+        - label: This request does not require reading, uploading, or storing my resume files.
+        - label: This request does not require sending my saved answers or form values to an AI provider.
+        - label: This request does not require new browser permissions, or I have explained why they are needed above.
+        - label: I understand Handshook does not claim to bypass site limits, guarantee outcomes, or avoid account risk.

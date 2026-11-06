@@ -1,0 +1,153 @@
+<main aria-label="Job search results">
+  <div role="status" aria-live="polite" data-hook="job-search-results-status-announcer">
+    3 jobs found
+  </div>
+
+  <form id="job-search-form" data-hook="job-search-filters" aria-label="Job search filters">
+    <input data-hook="nlw-search-input" name="query" value="data analyst" />
+    <button type="button" data-hook="job-search-clear-all">Clear all</button>
+  </form>
+
+  <div data-hook="job-list">
+    <!-- Card 1: ordinary result. The whole-card overlay anchor has no text; the
+         title is the first non-anchor div[aria-label] in the card. -->
+    <div data-has-action="true" data-is-active="false" data-hook="job-result-card | 90000001">
+      <a
+        role="button"
+        aria-label="Employer A Data Analyst Intern $25-30/hr · Internship · Jun 1—Aug 1 Austin, TX 2d ago"
+        href="/job-search/90000001?page=1&amp;per_page=25"
+      ></a>
+      <div>
+        <div
+          class="rosetta-card"
+          role="region"
+          aria-labelledby="card-90000001-label"
+        >
+          <div class="header">
+            <div class="employer-row">
+              <span>Employer A</span>
+            </div>
+            <div class="title-row">
+              <div
+                aria-label="Employer A Data Analyst Intern $25-30/hr · Internship · Jun 1—Aug 1 Austin, TX 2d ago"
+              >
+                Data Analyst Intern
+              </div>
+              <div class="meta">
+                <div>$25-30/hr · Internship · Jun 1—Aug 1</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-row">
+            <div data-hook="job-result-card-footer">
+              <span>Austin, TX</span>
+              <span aria-hidden="true">∙</span>
+              <span>2d ago</span>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <div role="group">
+            <span>
+              <button type="button" aria-label="Save Data Analyst Intern" data-hook="favorite-action | unsaved"></button>
+            </span>
+            <span>
+              <button type="button" aria-label="Hide Data Analyst Intern" data-hook="job-hide-button-90000001"></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: promoted result. Promotion adds a leading footer span, so the
+         location must be classified rather than taken positionally. -->
+    <div data-has-action="true" data-is-active="false" data-hook="job-result-card | 90000002">
+      <a
+        role="button"
+        aria-label="Employer B Software Engineer $120-140K/yr · Full-time New York, NY Promoted 1wk ago"
+        href="/job-search/90000002?page=1&amp;per_page=25"
+      ></a>
+      <div>
+        <div class="rosetta-card" role="region" aria-labelledby="card-90000002-label">
+          <div class="header">
+            <div class="employer-row">
+              <span>Employer B</span>
+            </div>
+            <div class="title-row">
+              <div
+                aria-label="Employer B Software Engineer $120-140K/yr · Full-time New York, NY Promoted 1wk ago"
+              >
+                Software Engineer
+              </div>
+              <div class="meta">
+                <div>$120-140K/yr · Full-time</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-row">
+            <div data-hook="job-result-card-footer">
+              <span>Promoted</span>
+              <span aria-hidden="true">∙</span>
+              <span>New York, NY</span>
+              <span aria-hidden="true">∙</span>
+              <span>1wk ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: remote, part-time, no listed salary. -->
+    <div data-has-action="true" data-is-active="false" data-hook="job-result-card | 90000003">
+      <a
+        role="button"
+        aria-label="Employer C Lab Assistant Part-time · Remote 3d ago"
+        href="/job-search/90000003?page=1&amp;per_page=25"
+      ></a>
+      <div>
+        <div class="rosetta-card" role="region" aria-labelledby="card-90000003-label">
+          <div class="header">
+            <div class="employer-row">
+              <span>Employer C</span>
+            </div>
+            <div class="title-row">
+              <div aria-label="Employer C Lab Assistant Part-time · Remote 3d ago">Lab Assistant</div>
+              <div class="meta">
+                <div>Part-time · Remote</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-row">
+            <div data-hook="job-result-card-footer">
+              <span>Remote</span>
+              <span aria-hidden="true">∙</span>
+              <span>3d ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-hook="job-search-pagination">
+    <button type="button" aria-label="first page" disabled>«</button>
+    <button type="button" aria-label="previous page" disabled>‹</button>
+    <button type="button">1</button>
+    <button type="button">2</button>
+    <button type="button" aria-label="next page">›</button>
+    <button type="button" aria-label="last page">»</button>
+  </div>
+
+  <!-- Similar-job links use real /jobs/{id} routes but are not result cards.
+       On a live split-view page they must not be counted as jobs. -->
+  <section aria-label="Similar Jobs">
+    <h3>Similar Jobs</h3>
+    <a href="/jobs/90008888">Employer Z Another Role</a>
+  </section>
+
+  <!-- Similar/recommended links live outside the result list and must not be
+       counted as cards. -->
+  <aside aria-label="Recommended">
+    <a href="/jobs/90009999">Recommended job outside results</a>
+  </aside>
+</main>

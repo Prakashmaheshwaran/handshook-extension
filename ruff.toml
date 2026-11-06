@@ -1,0 +1,3 @@
+[lint]
+# Keep the long-standing default rule set; newer ruff releases enable more rules by default.
+select = ["E4", "E7", "E9", "F"]

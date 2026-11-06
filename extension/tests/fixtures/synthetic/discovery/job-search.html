@@ -1,0 +1,40 @@
+<main aria-label="Job search results">
+  <h1>Jobs for you</h1>
+  <ul role="list" data-testid="job-list">
+    <li data-testid="job-card">
+      <a href="/jobs/1001"><h2>Software Engineer Intern</h2></a>
+      <p data-testid="employer">Acme Robotics</p>
+      <p data-testid="location">Remote</p>
+    </li>
+    <li data-testid="job-card">
+      <a href="/stu/jobs/1002"><h2>Data Analyst</h2></a>
+      <p data-testid="employer">Beta Analytics</p>
+      <p data-testid="location">Boston, MA</p>
+    </li>
+    <li data-testid="job-card">
+      <a href="/jobs/1001"><h2>Software Engineer Intern</h2></a>
+      <p data-testid="employer">Acme Robotics</p>
+      <p data-testid="location">Remote (US)</p>
+      <p data-testid="employment-type">Internship</p>
+      <p data-testid="salary">$30 / hour</p>
+    </li>
+    <li data-testid="job-card">
+      <a href="/jobs/0"><h2>Malformed zero id</h2></a>
+      <p data-testid="employer">Should Be Ignored</p>
+    </li>
+    <li data-testid="job-card">
+      <a href="/jobs/1003"></a>
+      <p data-testid="location">Chicago, IL</p>
+    </li>
+    <li data-testid="job-card">
+      <a href="/jobs/not-a-number"><h2>Malformed non-numeric id</h2></a>
+    </li>
+  </ul>
+  <nav aria-label="Search pagination">
+    <button type="button">Previous</button>
+    <button type="button" aria-label="Next page">Next</button>
+  </nav>
+  <aside aria-label="Recommended">
+    <a href="/jobs/9999">Recommended job outside results</a>
+  </aside>
+</main>

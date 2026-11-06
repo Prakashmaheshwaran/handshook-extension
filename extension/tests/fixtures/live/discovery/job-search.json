@@ -1,0 +1,11 @@
+{
+  "fixture": {
+    "pageType": "search",
+    "host": "app.joinhandshake.com"
+  },
+  "sourceUrl": "https://app.joinhandshake.com/job-search?page=1&per_page=25",
+  "expected": {
+    "jobIds": ["90000001", "90000002", "90000003"],
+    "titles": ["Data Analyst Intern", "Software Engineer Intern", "Product Design Intern"]
+  }
+}

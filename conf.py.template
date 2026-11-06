@@ -1,0 +1,177 @@
+"""
+Configuration file for Handshook - Handshake Job Automation Tool
+
+This file contains user-specific settings for the job automation tool.
+DO NOT COMMIT this file to git - it may contain sensitive information.
+
+SETUP STEPS:
+1. Add your resume IDs (see SETUP_GUIDE.md)
+2. Add job search URLs from Handshake
+3. Adjust keywords as needed
+4. Run: python handshake.py --dry-run
+"""
+
+# =============================================================================
+# HANDSHAKE SESSION COOKIES
+# =============================================================================
+# Cookies are auto-extracted and saved to secrets.json (not this file).
+# config_loader loads cookies from secrets.json at runtime.
+COOKIES = {}
+
+
+# =============================================================================
+# RESUME CONFIGURATION - REQUIRED
+# =============================================================================
+# Add your resume IDs from Handshake here with descriptions for AI matching.
+#
+# HOW TO FIND RESUME IDs:
+# 1. Login to Handshake at app.joinhandshake.com
+# 2. Go to Your Profile > Documents
+# 3. Click on a resume
+# 4. Look at the URL: app.joinhandshake.com/document/12345678
+# 5. The number (12345678) is your resume ID
+#
+# EXAMPLE:
+# RESUMES = [
+#     {
+#         "id": 12345678,
+#         "description": "Software Engineering resume with Python, JavaScript, React, AWS"
+#     },
+#     {
+#         "id": 87654321,
+#         "description": "Data Science resume with Python, SQL, Machine Learning"
+#     },
+# ]
+
+RESUMES = [
+    {
+        "id": None,  # TODO: Add your resume ID here
+        "description": "Your resume description here"
+    },
+]
+
+
+# =============================================================================
+# USER CONFIGURATION - REQUIRED FOR DOCUMENT SELECTION
+# =============================================================================
+# Your name as it appears in Handshake documents (used for CV selection)
+# Example: USER_NAME = "John Doe"
+USER_NAME = ""
+
+# Cover Letter document ID — uploaded when a job requires a cover letter
+# Find this in your Handshake profile under Documents
+COVER_LETTER_ID = None  # Example: 12345678
+
+
+# =============================================================================
+# JOB SEARCH URLS - REQUIRED
+# =============================================================================
+# Add Handshake job search URLs here. The tool will scrape these pages for jobs.
+#
+# HOW TO GET URLs:
+# 1. Login to Handshake at app.joinhandshake.com
+# 2. Go to Jobs tab
+# 3. Apply filters (location, job type, keywords)
+# 4. Copy the URL from your browser
+#
+# EXAMPLE URLs:
+# "https://app.joinhandshake.com/jobs?search_query=software+engineer&prefers_recent_grads=true",
+# "https://app.joinhandshake.com/jobs?search_query=junior+developer&employment_type_ids%5B%5D=1",
+
+URL_LIST = [
+    # TODO: Add your job search URLs here
+    # "https://app.joinhandshake.com/job-search/...",
+]
+
+
+# =============================================================================
+# KEYWORD FILTERS - OPTIONAL (customize as needed)
+# =============================================================================
+
+# Jobs containing these keywords in the title will be SKIPPED
+# These filter OUT jobs you don't want
+SKIP_KEYWORDS = [
+    "senior",
+    "lead",
+    "manager",
+    "director",
+    "principal",
+    "staff",
+    "5+ years",
+    "7+ years",
+    "10+ years",
+    "phd",
+    "executive",
+    "vp",
+    "vice president",
+    "head of",
+]
+
+# Jobs must contain at least ONE of these keywords to be considered
+# These filter IN jobs you want (set to [] to disable)
+JOB_KEYWORDS = [
+    "software",
+    "engineer",
+    "developer",
+    "python",
+    "javascript",
+    "java",
+    "ai",
+    "artificial intelligence",
+    "ml",
+    "machine learning",
+    "deep learning",
+    "data science",
+    "data scientist",
+    "nlp",
+    "computer vision",
+    "tensorflow",
+    "pytorch",
+    "entry level",
+    "entry-level",
+    "new grad",
+    "new graduate",
+    "associate",
+    "junior",
+    "jr",
+    "intern",
+    "internship",
+    "rotation",
+    "trainee",
+    "recent grad",
+]
+
+
+# =============================================================================
+# RATE LIMITING - OPTIONAL (adjust if needed)
+# =============================================================================
+# Controls how fast the tool applies to jobs (prevents detection)
+# Higher delays = safer but slower
+
+RATE_LIMIT_CONFIG = {
+    "min_delay": 60,        # Minimum seconds between applications (1 minute)
+    "max_delay": 120,       # Maximum seconds between applications (2 minutes)
+    "daily_limit": 50,      # Max applications per day
+    "batch_size": 10,       # Apply to this many jobs before taking a break
+    "break_duration": 300,  # Seconds to wait between batches (5 minutes)
+}
+
+
+# =============================================================================
+# BROWSER CONFIGURATION - OPTIONAL
+# =============================================================================
+# Chrome profile name for cookie extraction
+# Common values: "Default", "Profile 1", "Profile 2", etc.
+# Leave as "Default" to use your main Chrome profile
+CHROME_PROFILE = "Default"
+
+# Preferred browser for automation
+# Options: "chrome", "brave", "edge", or None for auto-detect
+PREFERRED_BROWSER = None
+
+
+# =============================================================================
+# LEGACY CONFIGURATION (not recommended - use URL_LIST instead)
+# =============================================================================
+# URL = ""  # Single URL (legacy)
+# DATE = "0"  # Cutoff date for job filtering

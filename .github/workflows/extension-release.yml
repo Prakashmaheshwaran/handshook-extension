@@ -1,0 +1,108 @@
+name: Extension draft release
+
+on:
+  push:
+    tags:
+      - "ext-v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: extension-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Verify, package, and stage extension release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: extension
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: extension/package-lock.json
+      - name: Check tag matches package version
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
+          if (!/^\d+\.\d+\.\d+$/.test(version) || process.env.GITHUB_REF_NAME !== `ext-v${version}`) {
+            throw new Error('Use ext-v<package.json version>, for example ext-v1.1.0.');
+          }
+          NODE
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:unit
+      - run: npm run test:integration
+      - run: npm run build
+      - run: npm run zip
+      - run: npx playwright install --with-deps chromium
+      - name: Mock-site E2E
+        run: xvfb-run -a npm run test:e2e
+        env:
+          HANDSHOOK_E2E_HEADLESS: "1"
+      - run: npm run package
+      - name: Verify store ZIP and checksum
+        run: |
+          version="${GITHUB_REF_NAME#ext-v}"
+          cd .output
+          unzip -t "handshook-${version}-chrome.zip"
+          sha256sum -c "handshook-${version}-chrome.zip.sha256"
+      - name: Create or update draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          SOURCE_SHA: ${{ github.sha }}
+          SERVER_URL: ${{ github.server_url }}
+        run: |
+          version="${RELEASE_TAG#ext-v}"
+          zip=".output/handshook-${version}-chrome.zip"
+          checksum="${zip}.sha256"
+          notes="${RUNNER_TEMP}/handshook-release-notes.md"
+          cat > "$notes" <<EOF
+          Handshook ${version} — draft for owner review.
+
+          Source commit: ${SOURCE_SHA}
+
+          [Install and first run](${SERVER_URL}/${GH_REPO}/blob/${RELEASE_TAG}/extension/docs/INSTALL.md)
+          · [Changelog](${SERVER_URL}/${GH_REPO}/blob/${RELEASE_TAG}/extension/CHANGELOG.md)
+
+          Download handshook-${version}-chrome.zip and its .sha256 file from Assets.
+          Unzip and Load unpacked as described in the install guide; do not use Source code archives.
+
+          SHA-256:
+          EOF
+          cat "$checksum" >> "$notes"
+          cat >> "$notes" <<'EOF'
+
+          Automated checks use fixtures and a mocked site. They do not prove a live account smoke test,
+          public download access, or Chrome Web Store approval. Complete the owner checklist before publishing.
+          EOF
+          if draft=$(gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft); then
+            if [ "$draft" != "true" ]; then
+              echo 'Refusing to replace assets on an already published release.' >&2
+              exit 1
+            fi
+            gh release upload "$RELEASE_TAG" "$zip" "$checksum" --clobber
+            gh release edit "$RELEASE_TAG" --notes-file "$notes"
+          else
+            gh release create "$RELEASE_TAG" "$zip" "$checksum" \
+              --draft --verify-tag --title "Handshook ${version}" --notes-file "$notes"
+          fi
+      - name: Retain Playwright failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: extension-release-test-results
+          path: extension/test-results
+          if-no-files-found: ignore

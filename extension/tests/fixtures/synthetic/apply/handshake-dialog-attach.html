@@ -1,0 +1,94 @@
+<!--
+  SYNTHETIC fixture (tests only): mirrors the live Handshake application dialog
+  described in .handoffs/AUTOMATION-PLAN.md from the 2026-10-28 owner screenshot.
+
+  Structure reproduced: a plain "Apply" action (no aria-haspopup), a dialog headed
+  "Apply to <Employer>", an "Attach your resume" card that is already selected
+  (check icon, file name, "Preview document" link, × remove button), an
+  "Attach your cover letter" search input ("Search your cover letters"), an
+  "or Upload new" alternative, and a "Submit Application" footer button.
+
+  This is not live markup. Every employer, document ID and file name is invented;
+  no tenant, person, resume or cover letter is represented.
+-->
+<main data-hook="job-details-page" aria-label="Job detail">
+  <h1>Backend Engineer</h1>
+  <p>Acme Robotics</p>
+  <button id="apply" type="button">Apply</button>
+  <div id="apply-dialog" hidden>
+    <div role="dialog" aria-modal="true" aria-labelledby="attach-title">
+      <h2 id="attach-title">Apply to Acme Robotics</h2>
+      <p>Details from Acme Robotics:</p>
+      <p>Applying requires a few documents. Attach them below.</p>
+
+      <section aria-label="Attach your resume">
+        <h3>Attach your resume</h3>
+        <div
+          id="resume-card"
+          data-testid="selected-document"
+          data-document-id="doc-resume"
+        >
+          <svg aria-hidden="true" focusable="false" width="16" height="16">
+            <circle cx="8" cy="8" r="7"></circle>
+          </svg>
+          <span>fixture_resume.pdf</span>
+          <a href="/docs/doc-resume" target="_blank" rel="noreferrer">Preview document</a>
+          <button type="button" aria-label="Remove fixture_resume.pdf">×</button>
+        </div>
+        <div id="resume-picker" hidden>
+          <input
+            id="resume-search"
+            type="text"
+            placeholder="Search your resumes"
+            aria-label="Search your resumes"
+            role="combobox"
+            aria-controls="resume-options"
+            aria-expanded="false"
+          />
+          <ul id="resume-options" role="listbox" hidden>
+            <li role="option" data-document-id="doc-other">Other Resume</li>
+            <li role="option" data-document-id="doc-resume">
+              <a href="/docs/doc-resume">Resume 2026</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section aria-label="Attach your cover letter">
+        <h3>Attach your cover letter</h3>
+        <div
+          id="cover-card"
+          data-testid="selected-document"
+          data-document-id="doc-cover"
+          hidden
+        >
+          <svg aria-hidden="true" focusable="false" width="16" height="16">
+            <circle cx="8" cy="8" r="7"></circle>
+          </svg>
+          <span>fixture_cover.pdf</span>
+          <a href="/documents/doc-cover" target="_blank" rel="noreferrer">Preview document</a>
+          <button type="button" aria-label="Remove fixture_cover.pdf">×</button>
+        </div>
+        <input
+          id="cover-search"
+          type="text"
+          placeholder="Search your cover letters"
+          aria-label="Search your cover letters"
+          role="combobox"
+          aria-controls="cover-options"
+          aria-expanded="false"
+        />
+        <span>or</span>
+        <button id="upload-cover" type="button">Upload new</button>
+        <ul id="cover-options" role="listbox" hidden>
+          <li role="option" data-document-id="doc-cover-alt">
+            <a href="/docs/doc-cover-alt">Alternate Cover Letter</a>
+          </li>
+          <li role="option" data-document-id="doc-cover">Cover Letter 2026</li>
+        </ul>
+      </section>
+
+      <button type="button" data-testid="submit-application">Submit Application</button>
+    </div>
+  </div>
+</main>

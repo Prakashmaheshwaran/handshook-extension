@@ -1,0 +1,518 @@
+# Machine-readable task graph for the original Handshook extension build.
+# Statuses reconciled 2026-10-27 with TASKS.md; done means baseline implementation.
+# T37/T38 need renewed review; T07/T39/T40 have owner evidence/publication gaps.
+# The current HX dispatch brief overrides historical wave/model/workspace rules.
+# Source of truth for narrative details: ../TASKS.md
+# Rules: ../AGENTS.md, ../orchestration/README.md
+#
+# This file intentionally does not duplicate acceptance criteria or prompts.
+# The orchestration lead fills the AGENTS.md §7 brief from TASKS.md.
+
+version: 1
+project: handshook-extension
+root: extension
+model: opencode-go/deepseek-v4.1-flash
+workspace: same-repo-disjoint-files
+live_site_access: forbidden
+git_operations: integration-only
+package_install: t01-only
+max_peak_agents: 8
+
+waves:
+  - id: '0a'
+    max_agents: 1
+    tasks: ['T01']
+  - id: '0b'
+    max_agents: 3
+    tasks: ['T02', 'T03', 'T04']
+  - id: '0c'
+    max_agents: 2
+    tasks: ['T05', 'T06']
+  - id: '0d'
+    max_agents: 2 # 1 agent + owner running the browser
+    tasks: ['T07', 'T08']
+  - id: '1a'
+    max_agents: 6
+    tasks: ['T10', 'T11', 'T13', 'T23', 'T24', 'T25']
+  - id: '1b'
+    max_agents: 6
+    tasks: ['T12', 'T14', 'T15', 'T16', 'T17', 'T19']
+  - id: '1c'
+    max_agents: 2
+    tasks: ['T20', 'T21']
+  - id: '1d'
+    max_agents: 2
+    tasks: ['T18', 'T22']
+  - id: '2a'
+    max_agents: 1
+    tasks: ['T30']
+  - id: '2b'
+    max_agents: 7
+    tasks: ['T31', 'T32', 'T33', 'T34', 'T35', 'T36', 'T37']
+  - id: '3a'
+    max_agents: 1
+    tasks: ['T38']
+  - id: '3b'
+    max_agents: 2 # 1 agent + owner
+    tasks: ['T39', 'T40']
+
+tasks:
+  - id: T01
+    title: Scaffold WXT/React/TS/Tailwind/test configs
+    wave: '0a'
+    tier: complex
+    depends_on: []
+    owns:
+      - 'extension/package.json'
+      - 'extension/package-lock.json'
+      - 'extension/wxt.config.ts'
+      - 'extension/tsconfig.json'
+      - 'extension/tsconfig.node.json'
+      - 'extension/eslint.config.js'
+      - 'extension/.prettierrc'
+      - 'extension/vitest.config.ts'
+      - 'extension/playwright.config.ts'
+      - 'extension/postcss.config.*'
+      - 'extension/src/public/icon-*.png'
+      - 'extension/src/entrypoints/background.ts'
+      - 'extension/src/entrypoints/handshake.content.ts'
+      - 'extension/src/entrypoints/sidepanel/**'
+    status: done
+
+  - id: T02
+    title: Frozen contracts (Zod + TS)
+    wave: '0b'
+    tier: complex
+    depends_on: ['T01']
+    owns:
+      - 'extension/src/core/contracts/**'
+      - 'extension/tests/unit/contracts.test.ts'
+    status: done
+
+  - id: T03
+    title: Test harness + mock Handshake skeleton
+    wave: '0b'
+    tier: normal
+    depends_on: ['T01']
+    owns:
+      - 'extension/src/test/**'
+      - 'extension/tests/unit/.gitkeep'
+      - 'extension/tests/integration/.gitkeep'
+      - 'extension/tests/e2e/helpers/**'
+      - 'extension/tests/e2e/smoke.spec.ts'
+      - 'extension/tests/fixtures/shared/**'
+      - 'extension/scripts/mock-handshake/**'
+      - 'extension/docs/TESTING.md'
+    status: done
+
+  - id: T04
+    title: Design system + side-panel shell
+    wave: '0b'
+    tier: normal
+    depends_on: ['T01']
+    owns:
+      - 'extension/src/entrypoints/sidepanel/**'
+      - 'extension/src/ui/App.tsx'
+      - 'extension/src/ui/router.ts'
+      - 'extension/src/ui/theme.css'
+      - 'extension/src/ui/components/**'
+      - 'extension/src/ui/hooks/useBridge.ts'
+      - 'extension/src/ui/screens/**'
+    status: done
+
+  - id: T05
+    title: Background router + storage bootstrap + engine state
+    wave: '0c'
+    tier: complex
+    depends_on: ['T02']
+    owns:
+      - 'extension/src/entrypoints/background.ts'
+      - 'extension/src/background/router.ts'
+      - 'extension/src/background/alarms.ts'
+      - 'extension/src/background/sidePanel.ts'
+      - 'extension/src/core/storage/db.ts'
+      - 'extension/src/core/storage/migrations.ts'
+      - 'extension/src/core/storage/settings.ts'
+      - 'extension/src/core/state/engineStore.ts'
+      - 'extension/tests/unit/storage.test.ts'
+    status: done
+
+  - id: T06
+    title: Content script shell + SPA bridge
+    wave: '0c'
+    tier: normal
+    depends_on: ['T02']
+    owns:
+      - 'extension/src/entrypoints/handshake.content.ts'
+      - 'extension/src/content/bridge.ts'
+      - 'extension/src/content/lifecycle.ts'
+      - 'extension/src/content/router.ts'
+      - 'extension/tests/unit/contentBridge.test.ts'
+    status: done
+
+  - id: T07
+    title: Live DOM spike + sanitized fixtures
+    wave: '0d'
+    tier: normal
+    depends_on: ['T06']
+    owns:
+      - 'extension/scripts/capture-page.js'
+      - 'extension/tests/fixtures/live/**'
+      - 'extension/docs/SPIKE-REPORT.md'
+    status: blocked
+
+  - id: T08
+    title: DOM utilities + host/URL helpers + selector stubs
+    wave: '0d'
+    tier: normal
+    depends_on: ['T02', 'T06']
+    owns:
+      - 'extension/src/handshake/dom.ts'
+      - 'extension/src/handshake/text.ts'
+      - 'extension/src/handshake/host.ts'
+      - 'extension/src/handshake/health.ts'
+      - 'extension/src/handshake/selectors/index.ts'
+      - 'extension/src/handshake/selectors/discovery.ts'
+      - 'extension/src/handshake/selectors/job.ts'
+      - 'extension/src/handshake/selectors/documents.ts'
+      - 'extension/src/handshake/selectors/apply.ts'
+      - 'extension/src/handshake/selectors/questions.ts'
+      - 'extension/src/handshake/selectors/verification.ts'
+      - 'extension/tests/unit/dom.test.ts'
+    status: done
+
+  - id: T10
+    title: Job repository + tracker + dedup
+    wave: '1a'
+    tier: normal
+    depends_on: ['T02', 'T05']
+    owns:
+      - 'extension/src/core/storage/jobs.ts'
+      - 'extension/src/core/storage/tracker.ts'
+      - 'extension/src/core/jobs/**'
+      - 'extension/tests/unit/tracker.test.ts'
+      - 'extension/tests/integration/tracker.test.ts'
+    status: done
+
+  - id: T11
+    title: Pacer + guardrails
+    wave: '1a'
+    tier: normal
+    depends_on: ['T02']
+    owns:
+      - 'extension/src/core/orchestrator/clock.ts'
+      - 'extension/src/core/orchestrator/pacer.ts'
+      - 'extension/src/core/orchestrator/guards.ts'
+      - 'extension/tests/unit/pacer.test.ts'
+      - 'extension/tests/unit/guards.test.ts'
+    status: done
+
+  - id: T12
+    title: Queue + engine state machine + reconcile
+    wave: '1b'
+    tier: complex
+    depends_on: ['T10', 'T11', 'T05']
+    owns:
+      - 'extension/src/core/orchestrator/engine.ts'
+      - 'extension/src/core/orchestrator/queue.ts'
+      - 'extension/src/core/orchestrator/reconcile.ts'
+      - 'extension/src/core/storage/submissions.ts'
+      - 'extension/tests/unit/engine.test.ts'
+      - 'extension/tests/unit/queue.test.ts'
+      - 'extension/tests/unit/reconcile.test.ts'
+    status: done
+
+  - id: T13
+    title: AI matcher core
+    wave: '1a'
+    tier: complex
+    depends_on: ['T02']
+    owns:
+      - 'extension/src/ai/types.ts'
+      - 'extension/src/ai/matcher.ts'
+      - 'extension/src/ai/heuristic.ts'
+      - 'extension/src/ai/prompts.ts'
+      - 'extension/src/ai/validate.ts'
+      - 'extension/src/ai/cache.ts'
+      - 'extension/tests/unit/matcher.test.ts'
+      - 'extension/tests/unit/heuristic.test.ts'
+      - 'extension/tests/unit/aiValidate.test.ts'
+    status: done
+
+  - id: T14
+    title: AI providers (Nano + Gemini BYOK)
+    wave: '1b'
+    tier: normal
+    depends_on: ['T13']
+    owns:
+      - 'extension/src/ai/providers/nano.ts'
+      - 'extension/src/ai/providers/gemini.ts'
+      - 'extension/src/ai/providers/availability.ts'
+      - 'extension/tests/unit/nano.test.ts'
+      - 'extension/tests/unit/gemini.test.ts'
+    status: done
+
+  - id: T15
+    title: Discovery adapter
+    wave: '1b'
+    tier: complex
+    depends_on: ['T08', 'T10', 'T07']
+    owns:
+      - 'extension/src/handshake/discovery.ts'
+      - 'extension/src/handshake/urls.ts'
+      - 'extension/src/handshake/selectors/discovery.ts'
+      - 'extension/tests/integration/discovery.test.ts'
+      - 'extension/tests/fixtures/discovery/**'
+    status: done
+
+  - id: T16
+    title: Job details + apply-type classification
+    wave: '1b'
+    tier: normal
+    depends_on: ['T08', 'T10', 'T07']
+    owns:
+      - 'extension/src/handshake/jobDetails.ts'
+      - 'extension/src/handshake/applyType.ts'
+      - 'extension/src/handshake/selectors/job.ts'
+      - 'extension/tests/integration/jobDetails.test.ts'
+      - 'extension/tests/fixtures/job/**'
+    status: done
+
+  - id: T17
+    title: Document discovery + selection
+    wave: '1b'
+    tier: complex
+    depends_on: ['T08', 'T07']
+    owns:
+      - 'extension/src/handshake/documents.ts'
+      - 'extension/src/handshake/selectors/documents.ts'
+      - 'extension/src/core/storage/documents.ts'
+      - 'extension/tests/integration/documents.test.ts'
+      - 'extension/tests/fixtures/documents/**'
+    status: done
+
+  - id: T18
+    title: Apply flow + confirmation verification
+    wave: '1d'
+    tier: complex
+    depends_on: ['T17', 'T19', 'T20', 'T12']
+    owns:
+      - 'extension/src/handshake/applyFlow.ts'
+      - 'extension/src/handshake/verification.ts'
+      - 'extension/src/handshake/selectors/apply.ts'
+      - 'extension/src/handshake/selectors/verification.ts'
+      - 'extension/tests/integration/applyFlow.test.ts'
+      - 'extension/tests/fixtures/apply/**'
+    status: done
+
+  - id: T19
+    title: Screening-question detector
+    wave: '1b'
+    tier: complex
+    depends_on: ['T08', 'T07']
+    owns:
+      - 'extension/src/handshake/questions.ts'
+      - 'extension/src/handshake/selectors/questions.ts'
+      - 'extension/tests/integration/questions.test.ts'
+      - 'extension/tests/fixtures/questions/**'
+    status: done
+
+  - id: T20
+    title: Answer bank + matcher
+    wave: '1c'
+    tier: complex
+    depends_on: ['T02', 'T19']
+    owns:
+      - 'extension/src/core/answers/matcher.ts'
+      - 'extension/src/core/answers/policy.ts'
+      - 'extension/src/core/answers/normalize.ts'
+      - 'extension/src/core/storage/answers.ts'
+      - 'extension/src/handshake/answerMatcher.ts'
+      - 'extension/tests/unit/answerMatcher.test.ts'
+      - 'extension/tests/integration/answers.test.ts'
+    status: done
+
+  - id: T21
+    title: Dashboard + Queue + Activity UI
+    wave: '1c'
+    tier: normal
+    depends_on: ['T04', 'T05', 'T12']
+    owns:
+      - 'extension/src/ui/screens/Dashboard/**'
+      - 'extension/src/ui/screens/Queue/**'
+      - 'extension/src/ui/screens/Activity/**'
+      - 'extension/src/ui/hooks/useEngineState.ts'
+      - 'extension/src/ui/hooks/useQueue.ts'
+      - 'extension/src/ui/hooks/useEvents.ts'
+    status: done
+
+  - id: T22
+    title: Onboarding + Settings + Needs You + Diagnostics UI
+    wave: '1d'
+    tier: normal
+    depends_on: ['T04', 'T05', 'T20']
+    owns:
+      - 'extension/src/ui/screens/Onboarding/**'
+      - 'extension/src/ui/screens/Settings/**'
+      - 'extension/src/ui/screens/NeedsYou/**'
+      - 'extension/src/ui/screens/Diagnostics/**'
+      - 'extension/src/ui/hooks/useSettings.ts'
+      - 'extension/src/ui/hooks/useOnboarding.ts'
+    status: done
+
+  - id: T23
+    title: Runner-tab manager + content orchestration
+    wave: '1a'
+    tier: complex
+    depends_on: ['T05', 'T06']
+    owns:
+      - 'extension/src/core/orchestrator/tabs.ts'
+      - 'extension/src/content/runner.ts'
+      - 'extension/tests/unit/tabs.test.ts'
+    status: done
+
+  - id: T24
+    title: Logging + redaction + diagnostics core
+    wave: '1a'
+    tier: normal
+    depends_on: ['T02', 'T05']
+    owns:
+      - 'extension/src/core/logging/logger.ts'
+      - 'extension/src/core/logging/redact.ts'
+      - 'extension/src/core/logging/eventStore.ts'
+      - 'extension/src/core/diagnostics/export.ts'
+      - 'extension/src/core/diagnostics/health.ts'
+      - 'extension/tests/unit/redact.test.ts'
+      - 'extension/tests/unit/diagnostics.test.ts'
+    status: done
+
+  - id: T25
+    title: Filters + fit scoring
+    wave: '1a'
+    tier: normal
+    depends_on: ['T02']
+    owns:
+      - 'extension/src/core/filters/**'
+      - 'extension/src/core/scoring/**'
+      - 'extension/tests/unit/filters.test.ts'
+      - 'extension/tests/unit/scoring.test.ts'
+    status: done
+
+  - id: T30
+    title: End-to-end integration wiring
+    wave: '2a'
+    tier: complex
+    depends_on: ['T12', 'T14', 'T15', 'T16', 'T18', 'T21', 'T22', 'T23', 'T24', 'T25']
+    owns:
+      - 'extension/src/background/router.ts'
+      - 'extension/src/background/handlers/**'
+      - 'extension/src/content/router.ts'
+      - 'extension/src/handshake/adapters.ts'
+      - 'extension/src/ui/App.tsx'
+      - 'extension/src/entrypoints/background.ts'
+      - 'extension/src/entrypoints/handshake.content.ts'
+    status: done
+
+  - id: T31
+    title: Review-mode E2E
+    wave: '2b'
+    tier: normal
+    depends_on: ['T30']
+    owns:
+      - 'extension/tests/e2e/review/**'
+      - 'extension/tests/e2e/fixtures/review/**'
+    status: done
+
+  - id: T32
+    title: Autopilot + failure E2E
+    wave: '2b'
+    tier: complex
+    depends_on: ['T30']
+    owns:
+      - 'extension/tests/e2e/autopilot/**'
+      - 'extension/tests/e2e/failures/**'
+    status: done
+
+  - id: T33
+    title: Legacy import/export
+    wave: '2b'
+    tier: normal
+    depends_on: ['T10', 'T20']
+    owns:
+      - 'extension/src/core/migration/**'
+      - 'extension/src/ui/screens/Settings/ImportExportSection.tsx'
+      - 'extension/tests/unit/migration.test.ts'
+    status: done
+
+  - id: T34
+    title: UX + accessibility polish
+    wave: '2b'
+    tier: normal
+    depends_on: ['T21', 'T22']
+    owns:
+      - 'extension/src/ui/**'
+      - 'extension/docs/UX-REVIEW.md'
+    exclude:
+      - 'extension/src/ui/screens/Settings/ImportExportSection.tsx'
+    status: done
+
+  - id: T35
+    title: Store assets + privacy + packaging
+    wave: '2b'
+    tier: normal
+    depends_on: ['T01', 'T21', 'T22']
+    owns:
+      - 'extension/docs/STORE.md'
+      - 'extension/docs/PRIVACY.md'
+      - 'extension/src/public/**'
+      - 'extension/scripts/package.ts'
+      - 'extension/CHANGELOG.md'
+      - 'extension/README.md'
+    status: done
+
+  - id: T36
+    title: Extension CI workflow
+    wave: '2b'
+    tier: normal
+    depends_on: ['T01', 'T03']
+    owns:
+      - '.github/workflows/extension.yml'
+      - 'extension/scripts/ci/**'
+    status: done
+
+  - id: T37
+    title: Security review
+    wave: '2b'
+    tier: complex
+    depends_on: ['T30']
+    owns:
+      - 'extension/docs/SECURITY-REVIEW.md'
+      - 'extension/tests/security/**'
+    status: review
+
+  - id: T38
+    title: Release-candidate hardening
+    wave: '3a'
+    tier: complex
+    depends_on: ['T30', 'T31', 'T32', 'T33', 'T34', 'T35', 'T36', 'T37']
+    owns:
+      - 'extension/**'
+    status: review
+
+  - id: T39
+    title: Live smoke (user-driven)
+    wave: '3b'
+    tier: simple
+    depends_on: ['T38']
+    owns:
+      - 'extension/docs/LIVE-SMOKE.md'
+    status: blocked
+
+  - id: T40
+    title: Store submission + beta
+    wave: '3b'
+    tier: simple
+    depends_on: ['T38', 'T35', 'T39']
+    owns:
+      - 'extension/docs/RELEASE.md'
+    status: blocked

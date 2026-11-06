@@ -1,0 +1,21 @@
+<main data-hook="job-details-page" aria-label="Job detail">
+  <h1>Product Analyst Intern</h1>
+  <p>Contoso Analytics</p>
+  <button type="button" aria-haspopup="dialog" aria-controls="apply-dialog">Apply</button>
+  <div id="apply-dialog" hidden>
+    <div role="dialog" aria-modal="true" aria-labelledby="apply-title">
+      <h2 id="apply-title">Apply to Product Analyst Intern</h2>
+      <label for="resume-select">Resume</label>
+      <select id="resume-select" name="resume" required>
+        <option value="">Select a resume</option>
+        <option value="doc-resume">Resume 2026</option>
+      </select>
+      <label for="cover-select">Cover letter (optional)</label>
+      <select id="cover-select" name="cover_letter">
+        <option value="">No cover letter</option>
+        <option value="doc-cover">Cover Letter 2026</option>
+      </select>
+      <button type="button" data-testid="submit-application">Submit Application</button>
+    </div>
+  </div>
+</main>

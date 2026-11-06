@@ -1,0 +1,16 @@
+node_modules/
+.output/
+.wxt/
+.wxt-types/
+coverage/
+playwright-report/
+test-results/
+.handoffs/
+*.tsbuildinfo
+.eslintcache
+npm-debug.log*
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store

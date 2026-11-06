@@ -1,0 +1,9 @@
+{
+  "capturedAt": "2026-10-25",
+  "chrome": "155.0.8059.86",
+  "tenant": "app.joinhandshake.com",
+  "page": "job-search",
+  "sourceUrlPattern": "https://app.joinhandshake.com/job-search/{selectedJobId}?page=1&per_page=25",
+  "sanitized": true,
+  "notes": "Employer names and job IDs replaced; personal/school data removed."
+}

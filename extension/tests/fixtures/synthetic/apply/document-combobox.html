@@ -1,0 +1,18 @@
+<main data-hook="job-details-page">
+  <h1>Software Engineer Intern</h1>
+  <button id="open" type="button" aria-haspopup="dialog" aria-controls="apply-dialog">Apply</button>
+  <div id="apply-dialog" role="dialog" aria-modal="true" hidden>
+    <h2>Review application</h2>
+    <div>
+      <label for="resume-picker">Resume</label>
+      <button id="resume-picker" type="button" role="combobox" aria-controls="resume-options">
+        Choose a resume
+      </button>
+      <ul id="resume-options" role="listbox" hidden>
+        <li role="option" data-value="doc-other">Resume 2026</li>
+        <li role="option" data-value="doc-resume">Resume 2026</li>
+      </ul>
+    </div>
+    <button id="submit" type="button">Submit Application</button>
+  </div>
+</main>

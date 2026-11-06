@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Known issues
+    url: https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/KNOWN_ISSUES.md
+    about: Check reported problems and workarounds before opening a new issue.
+  - name: Install and first-run guide
+    url: https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/INSTALL.md
+    about: Installation, onboarding, and troubleshooting steps.
+  - name: FAQ
+    url: https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/FAQ.md
+    about: Common setup, AI, document, and run questions.
+  - name: Privacy policy
+    url: https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/PRIVACY.md
+    about: What is stored locally and what is sent to Handshake or AI providers.
+  - name: Security issue
+    url: https://github.com/Prakashmaheshwaran/handshook-extension/security/policy
+    about: Report a vulnerability privately. Do not open a public issue.

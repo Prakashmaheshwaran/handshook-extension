@@ -1,0 +1,92 @@
+{
+  "_comment": "Copy this file to conf.json and fill in your settings. DO NOT commit conf.json.",
+
+  "COOKIES": {},
+
+  "RESUMES": [
+    {
+      "id": null,
+      "title": "Your Resume Title",
+      "description": "Software Engineering resume with Python, JavaScript, React, AWS"
+    }
+  ],
+
+  "USER_NAME": "",
+
+  "COVER_LETTER_ID": null,
+
+  "TRANSCRIPT_ID": null,
+
+  "URL_LIST": [
+  ],
+
+  "SKIP_KEYWORDS": [
+    "senior",
+    "lead",
+    "manager",
+    "director",
+    "principal",
+    "staff",
+    "5+ years",
+    "7+ years",
+    "10+ years",
+    "phd",
+    "executive",
+    "vp",
+    "vice president",
+    "head of"
+  ],
+
+  "JOB_KEYWORDS": [
+    "software",
+    "engineer",
+    "developer",
+    "python",
+    "javascript",
+    "java",
+    "ai",
+    "artificial intelligence",
+    "ml",
+    "machine learning",
+    "deep learning",
+    "data science",
+    "data scientist",
+    "nlp",
+    "computer vision",
+    "tensorflow",
+    "pytorch",
+    "entry level",
+    "entry-level",
+    "new grad",
+    "new graduate",
+    "associate",
+    "junior",
+    "jr",
+    "intern",
+    "internship",
+    "rotation",
+    "trainee",
+    "recent grad"
+  ],
+
+  "RATE_LIMIT_CONFIG": {
+    "min_delay_seconds": 60,
+    "max_delay_seconds": 120,
+    "daily_limit": 50,
+    "session_batch_size": 10,
+    "session_break_min": 300,
+    "session_break_max": 600,
+    "jitter_percent": 10,
+    "enabled": true
+  },
+
+  "CHROME_PROFILE": "Default",
+
+  "PREFERRED_BROWSER": null,
+
+  "PROFILES": null,
+
+  "DATE": "0",
+
+  "URL": ""
+}

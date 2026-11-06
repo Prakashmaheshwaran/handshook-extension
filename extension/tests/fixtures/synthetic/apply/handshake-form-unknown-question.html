@@ -1,0 +1,22 @@
+<main data-hook="job-details-page" aria-label="Job detail">
+  <h1>Data Analyst</h1>
+  <p>Northwind Labs</p>
+  <button type="button" aria-haspopup="dialog" aria-controls="apply-dialog">Apply</button>
+  <div id="apply-dialog" hidden>
+    <div role="dialog" aria-modal="true" aria-labelledby="apply-title">
+      <h2 id="apply-title">Apply to Data Analyst</h2>
+      <label for="resume-select">Resume</label>
+      <select id="resume-select" name="resume" required>
+        <option value="">Select a resume</option>
+        <option value="doc-resume">Resume 2026</option>
+      </select>
+      <label for="work-auth">Are you authorized to work in the United States?</label>
+      <select id="work-auth" name="work-auth" required>
+        <option value="">Select an answer</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <button type="button" data-testid="submit-application">Submit Application</button>
+    </div>
+  </div>
+</main>
