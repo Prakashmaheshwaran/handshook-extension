@@ -17,14 +17,14 @@ in the private `Prakashmaheshwaran/handshook` repository, and a cleaned public s
 `Prakashmaheshwaran/handshook-extension`, default branch **master**. The private history
 contained session cookies, so the private repository must not be made public.
 
-| Destination      | URL                                                                                               | Current status                                                                       |
-| ---------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Homepage         | <https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/README.md>       | Public; recheck signed out after each snapshot push.                                 |
-| Install guide    | <https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/INSTALL.md> | Public.                                                                              |
-| Privacy policy   | <https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/PRIVACY.md> | Public, no login required.                                                           |
-| Support          | <https://github.com/Prakashmaheshwaran/handshook-extension/issues>                                | Public issues.                                                                       |
-| GitHub Releases  | <https://github.com/Prakashmaheshwaran/handshook-extension/releases>                              | OWNER ACTION: publish a reviewed release.                                            |
-| Chrome Web Store | **PENDING — replace this cell with the approved listing URL**                                     | Draft item `koimmcoadjnkppajahgjfaecjgbgccei` created 2026-11-06; not yet submitted. |
+| Destination      | URL                                                                                               | Current status                                                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Homepage         | <https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/README.md>       | Public; recheck signed out after each snapshot push.                                                                    |
+| Install guide    | <https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/INSTALL.md> | Public.                                                                                                                 |
+| Privacy policy   | <https://github.com/Prakashmaheshwaran/handshook-extension/blob/master/extension/docs/PRIVACY.md> | Public, no login required.                                                                                              |
+| Support          | <https://github.com/Prakashmaheshwaran/handshook-extension/issues>                                | Public issues.                                                                                                          |
+| GitHub Releases  | <https://github.com/Prakashmaheshwaran/handshook-extension/releases>                              | OWNER ACTION: publish a reviewed release.                                                                               |
+| Chrome Web Store | **PENDING — replace this cell with the approved listing URL**                                     | Item `koimmcoadjnkppajahgjfaecjgbgccei` (1.1.4) submitted for review 2026-11-06; publishes automatically once approved. |
 
 The owner can choose:
 
