@@ -84,7 +84,7 @@ On the default path, a specific job waits for you for one of two reasons: a **re
 question has no saved answer**, or a **required document has no entered ID**. Both appear
 in **Needs you** with the exact question or document type; supply it and retry. Handshook
 never invents an answer or picks a file you did not enter. The run itself can pause for
-its own controls — daily cap, pacing or a session break, active hours, an expired session,
+its own controls — daily cap, pacing or a session break, an expired session,
 a page it cannot identify (`UI_CHANGED`), or an uncertain submission — and the dashboard
 shows why.
 
@@ -119,7 +119,7 @@ defaults once; an explicit **Dry run** is left alone, and your later changes are
 ## Why did the run stop at the daily cap or wait?
 
 The default cap is 15 applications per local day for new installs; settings allow at most 100.
-Pacing delays, session breaks, active hours, or repeated failures can also pause a run.
+Pacing delays, session breaks, or repeated failures can also pause a run.
 Check the dashboard message. Wait for the cap to reset naturally; clearing local
 history also removes duplicate-protection records and is not a way to increase limits.
 

@@ -82,7 +82,7 @@ async function capturePanel(page, extensionId) {
       protocolVersion: 1,
       patch: {
         onboardingComplete: true,
-        mode: 'review',
+        mode: 'autopilot',
         ui: { theme: 'light' },
         documents: { defaultResumeId: 'demo-resume' },
         search: {
@@ -120,7 +120,7 @@ async function capturePanel(page, extensionId) {
     }));
     const queue = jobs.map((job, index) => ({
       jobId: job.id,
-      status: ['ready_for_review', 'queued', 'needs_input'][index],
+      status: ['queued', 'queued', 'needs_input'][index],
       priority: 90 - index * 10,
       attempts: index === 1 ? 0 : 1,
       addedAt: at,
@@ -143,10 +143,6 @@ async function capturePanel(page, extensionId) {
         updatedAt: at,
       });
       tx.objectStore('meta').put({
-        key: 'needs:demo-1',
-        value: { reason: 'review', questions: [], missingDocumentTypes: [] },
-      });
-      tx.objectStore('meta').put({
         key: 'needs:demo-3',
         value: {
           reason: 'questions',
@@ -161,11 +157,11 @@ async function capturePanel(page, extensionId) {
     await chrome.storage.local.set({
       'handshook.engine.v1': {
         ...response.data,
-        status: 'needs_user',
-        mode: 'review',
-        currentJobId: 'demo-1',
-        currentPhase: 'Review application',
-        message: 'The application is ready. Review it in the runner tab, then submit it there.',
+        status: 'idle',
+        mode: 'autopilot',
+        currentJobId: undefined,
+        currentPhase: undefined,
+        message: undefined,
         updatedAt: at,
       },
       'handshook.onboarding.v1': {
@@ -209,7 +205,7 @@ async function capturePanel(page, extensionId) {
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await page.getByRole('heading', { name: 'Settings', exact: true }).waitFor();
   await page
-    .getByText(/Review before submit/i)
+    .getByText(/Run mode and safety/i)
     .first()
     .waitFor();
   // Fit the complete safety section, ending in the gap before Search. This
@@ -303,20 +299,20 @@ function dataUrl(png) {
 
 const CAPTIONS = {
   dashboard: {
-    title: 'Review first. Submit when you are ready.',
-    sub: 'Review mode stops before submitting. Cloud AI is optional and off by default.',
+    title: 'Click Start. Handshook applies for you.',
+    sub: 'Autopilot fills and submits Handshake applications, then checks for the confirmation.',
   },
   queue: {
     title: 'Every job in one queue.',
     sub: 'Matched to your saved search, ranked by fit, deduplicated locally.',
   },
   needs: {
-    title: 'Your answers. Your approval.',
-    sub: 'Unknown questions wait. Reuse only the answers you approve.',
+    title: 'Missing answers wait for you.',
+    sub: 'A required question with no saved answer goes to Needs you instead of being guessed.',
   },
   settings: {
-    title: 'Conservative limits, local data.',
-    sub: 'Daily caps, deliberate pacing, and review before submit on by default.',
+    title: 'Every switch stays yours.',
+    sub: 'Review before submit, Dry run, sensitive answers and AI can each be turned on or off.',
   },
 };
 
@@ -368,7 +364,7 @@ function compositionHtml({ panelPng, panelWidth, panelHeight, searchPng, caption
 <body>
   <div class="grain"></div>
   <div class="caption">
-    <span class="eyebrow"><span class="dot"></span>Handshook · Review mode</span>
+    <span class="eyebrow"><span class="dot"></span>Handshook · Autopilot</span>
     <h1>${caption}</h1>
     <p>${captionSub}</p>
   </div>
@@ -419,10 +415,10 @@ function promoHtml(iconDataUrl) {
   <div class="content">
     <div class="brand">
       <img class="icon" src="${iconDataUrl}" alt="">
-      <div><h1>Handshook</h1><p class="tag">Review-first job applications</p></div>
+      <div><h1>Handshook</h1><p class="tag">Automated Handshake applications</p></div>
     </div>
     <div>
-      <div class="row"><span class="pill">Review by default</span><span class="pill">Local-first</span><span class="pill">No telemetry</span></div>
+      <div class="row"><span class="pill">Autopilot by default</span><span class="pill">Local-first</span><span class="pill">No telemetry</span></div>
       <p class="fine" style="margin-top:9px">Not affiliated with Handshake.</p>
     </div>
   </div>
@@ -460,13 +456,13 @@ function marqueeHtml(iconDataUrl, panelPng) {
 <body>
   <div class="dots"></div>
   <div class="copy">
-    <div class="brand"><img class="icon" src="${iconDataUrl}" alt=""><div><h1>Handshook</h1><p class="tag">Review-first job applications</p></div></div>
-    <h2>Fill applications faster.<br>Keep the final say.</h2>
+    <div class="brand"><img class="icon" src="${iconDataUrl}" alt=""><div><h1>Handshook</h1><p class="tag">Automated Handshake applications</p></div></div>
+    <h2>Apply on Handshake automatically.<br>Stay in control.</h2>
     <div class="points">
-      <div class="point"><span class="check">✓</span>Review before submit on by default</div>
+      <div class="point"><span class="check">✓</span>Fills and submits applications for you</div>
       <div class="point"><span class="check">✓</span>Uses the session already in your browser</div>
       <div class="point"><span class="check">✓</span>Local-first data. No developer telemetry</div>
-      <div class="point"><span class="check">✓</span>Conservative daily caps and human pacing</div>
+      <div class="point"><span class="check">✓</span>Daily cap, pacing, and a Stop button</div>
     </div>
   </div>
   <div class="panel"><img src="${dataUrl(panelPng)}" alt="Handshook side panel"></div>
